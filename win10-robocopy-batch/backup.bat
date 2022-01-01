@@ -337,7 +337,7 @@ for /f "tokens=*" %%a in (%backup_targets%) do (
       /R:5 ^
       /W:10 ^
       /LOG+:"%log_path%" ^
-      /MIR
+      /MIR ^
       /L
   )
 )
