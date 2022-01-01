@@ -300,10 +300,6 @@ if errorlevel 2 exit /B 1
 :: Backup
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-echo DANGER STOP!
-exit /B 1
-
-:: DOCS MISSING
 :: Note, there is a lot going on in here, I will try to walk through each line
 :: Also note, the lines CANNOT be interrupted with comments
 :: First the targets are read in (%%a)
@@ -342,5 +338,6 @@ for /f "tokens=*" %%a in (%backup_targets%) do (
       /W:10 ^
       /LOG+:"%log_path%" ^
       /MIR
+      /L
   )
 )
