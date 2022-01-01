@@ -108,6 +108,9 @@ set log_path=D:\logs\devices\%backup_name%.log.txt
 :: If DRIVE LETTER "D" is not being used for backups, please change it
 set backup_path=D:\backups\devices\%backup_name%.backup
 
+:: Name of file where backup targets are listed
+set backup_targets=backup_targets.txt
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Human Interaction
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -130,11 +133,11 @@ if errorlevel 2 exit /B 1
 ::    "How to check if a file exists from inside a batch file [duplicate]"
 ::    https://stackoverflow.com/questions/4340350/how-to-check-if-a-file-exists-from-inside-a-batch-file
 ::    https://stackoverflow.com/a/4340395
-if not exist backup_targets.txt (
+if not exist %backup_targets% (
   echo/
   echo Question 2
   echo WARNING A list of backup targets was NOT found
-  echo Please create backup_targets.txt and run this script again
+  echo Please create %backup_targets% and run this script again
   exit /B 1
 )
 
@@ -147,7 +150,7 @@ if not exist backup_targets.txt (
 echo/
 echo Question 3
 echo Is this list of paths to backup correct?
-for /f "tokens=*" %%a in (backup_targets.txt) do (
+for /f "tokens=*" %%a in (%backup_targets%) do (
   echo   - %%a
 )
 CHOICE /C YN /M "Press Y for Yes, N for No"
@@ -162,7 +165,7 @@ if errorlevel 2 (
 ::    https://stackoverflow.com/a/4340395
 echo/
 echo Question 4
-for /f "tokens=*" %%a in (backup_targets.txt) do (
+for /f "tokens=*" %%a in (%backup_targets%) do (
   if not exist %%a echo WARNING could not find %%a
 )
 echo Any paths that could not be found will be skipped during copying
@@ -275,20 +278,58 @@ if not exist %backup_path% (
   )
 )
 
+:: Final Notice to Begin Copying
+echo/
+echo Question 13
+echo Everything is ready, begin copying now?
+CHOICE /C YN /M "Press Y for Yes, N for No"
+if errorlevel 2 exit /B 1
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Backup
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:: TEMP TEST DANGER
-:: Robocopy ^
-::   /SD:$SOURCE ^
-::   /DD:$DEST ^
-::   /E ^
-::   /ZB ^
-::   /DCOPY:DAT ^
-::   /COPYALL ^
-::   /R:5 ^
-::   /W:10 ^
-::   /LOG:$LOGFILE ^
-::   /MIR
-:: 
+echo DANGER STOP!
+exit /B 1
+
+:: DOCS MISSING
+:: Note, there is a lot going on in here, I will try to walk through each line
+:: Also note, the lines CANNOT be interrupted with comments
+:: First the targets are read in (%%a)
+::    "Robocopy from list.txt"
+::    https://serverfault.com/questions/652119/robocopy-from-list-txt
+::    https://serverfault.com/a/784056
+:: Then the PATH to EACH TARGET FOLDER is copied (%%c)
+:: Note that this is due to the finnickiness of Batch
+:: %%a %%b and %%c are all "dynamic variables" that are magically assigned to
+:: Even though %%c is not listed, it exists and represents the rest of the path
+:: We are splitting "C:\Users..." on the ":" character and keeping the "\Users..." part
+::    "Split string with string as delimiter"
+::    https://stackoverflow.com/questions/23600775/split-string-with-string-as-delimiter
+::    https://stackoverflow.com/a/23600870
+:: Then we are invoking Robocopy
+::    "Wikipedia: Robocopy"
+::    https://en.wikipedia.org/wiki/Robocopy
+:: With %%a as SOURCE to COPY FROM
+:: And %backup_path%%%c as DESTINATION to COPY TO
+:: We copy ALL subdirectories, even EMPTY ones (/E)
+:: For each Directory, Copy the Data, Attributes, and Time (/DCOPY:DAT)
+:: For each File, Copy the Data, Attributes, Time, Security, and Owner (/COPY:DATSO)
+:: Only Try 5 Times (/R:5)
+:: Only Wait 10 Seconds before retrying (/W:10)
+:: Append the status as a log to %log_path% (/LOG+:...)
+:: Mirror Changes (Copy NEW files and Delete OLD files) (/MIR)
+for /f "tokens=*" %%a in (%backup_targets%) do (
+  for /F "tokens=1,2 delims=:" %%b in ("%%a") do (
+    Robocopy ^
+      "%%a" ^
+      "%backup_path%%%c" ^
+      /E ^
+      /DCOPY:DAT ^
+      /COPY:DATSO ^
+      /R:5 ^
+      /W:10 ^
+      /LOG+:"%log_path%" ^
+      /MIR
+  )
+)
