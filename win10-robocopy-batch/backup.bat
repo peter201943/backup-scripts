@@ -326,18 +326,21 @@ if errorlevel 2 exit /B 1
 :: Only Wait 10 Seconds before retrying (/W:10)
 :: Append the status as a log to %log_path% (/LOG+:...)
 :: Mirror Changes (Copy NEW files and Delete OLD files) (/MIR)
+:: Also note the added quotes to allow paths with spaces
+::    "How to copy directories with spaces in the name"
+::    https://stackoverflow.com/questions/12027987/how-to-copy-directories-with-spaces-in-the-name
+::    https://stackoverflow.com/a/36357980
 for /f "tokens=*" %%a in (%backup_targets%) do (
   for /F "tokens=1,2 delims=:" %%b in ("%%a") do (
     Robocopy ^
-      "%%a" ^
-      "%backup_path%%%c" ^
+      "%%a " ^
+      "%backup_path%%%c " ^
       /E ^
       /DCOPY:DAT ^
       /COPY:DATSO ^
       /R:5 ^
       /W:10 ^
       /LOG+:"%log_path%" ^
-      /MIR ^
-      /L
+      /MIR
   )
 )
