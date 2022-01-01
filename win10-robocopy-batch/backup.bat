@@ -239,11 +239,11 @@ if errorlevel 2 (
 ::    "How to check if a file exists from inside a batch file [duplicate]"
 ::    https://stackoverflow.com/questions/4340350/how-to-check-if-a-file-exists-from-inside-a-batch-file
 ::    https://stackoverflow.com/a/4340395
-if not exist %log_path% (
+if exist %log_path% (
   echo/
   echo Question 10
-  echo WARNING could not find %log_path%
-  echo Proceed?
+  echo NOTICE a log already exists at %log_path%
+  echo Proceed? (Will append to log)
   CHOICE /C YN /M "Press Y for Yes, N for No"
   if errorlevel 2 (
     echo Please edit this script to change log path
@@ -262,15 +262,15 @@ if errorlevel 2 (
   exit /B 1
 )
 
-:: Does the backup location exist?
+:: Does the backup location already exist?
 ::    "How to check if a file exists from inside a batch file [duplicate]"
 ::    https://stackoverflow.com/questions/4340350/how-to-check-if-a-file-exists-from-inside-a-batch-file
 ::    https://stackoverflow.com/a/4340395
-if not exist %backup_path% (
+if exist %backup_path% (
   echo/
   echo Question 12
-  echo WARNING could not find %backup_path%
-  echo Proceed?
+  echo WARNING a backup already exists at %backup_path%
+  echo Proceed? (Overwrites current)
   CHOICE /C YN /M "Press Y for Yes, N for No"
   if errorlevel 2 (
     echo Please edit this script to change backup path
@@ -278,9 +278,18 @@ if not exist %backup_path% (
   )
 )
 
+:: Check that backup drive is connected
+if not exist D:\ (
+  echo/
+  echo Question 13
+  echo WARNING backup drive not found at DRIVE LETTER "D"
+  echo if drive is connected at different letter, please revise script and try again
+  exit /B 1
+)
+
 :: Final Notice to Begin Copying
 echo/
-echo Question 13
+echo Question 14
 echo Everything is ready, begin copying now?
 CHOICE /C YN /M "Press Y for Yes, N for No"
 if errorlevel 2 exit /B 1
