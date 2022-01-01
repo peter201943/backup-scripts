@@ -138,6 +138,7 @@ if not exist %backup_targets% (
   echo Question 2
   echo WARNING A list of backup targets was NOT found
   echo Please create %backup_targets% and run this script again
+  echo CRITICAL FAILURE
   exit /B 1
 )
 
@@ -284,6 +285,7 @@ if not exist D:\ (
   echo Question 13
   echo WARNING backup drive not found at DRIVE LETTER "D"
   echo if drive is connected at different letter, please revise script and try again
+  echo CRITICAL FAILURE
   exit /B 1
 )
 
