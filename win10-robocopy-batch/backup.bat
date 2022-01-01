@@ -2,8 +2,6 @@
 :: Information
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:: generic-robocopy.bat
-
 :: MIT License
 :: 
 :: Copyright 2021 Peter Mangelsdorf
@@ -31,6 +29,7 @@
 
 :: Info
 :: Title:           Simple Robocopy Backup Script for Mom and Dad
+:: UUID:            a2ab1d0d-a348-4f47-839d-2ebf09281293
 :: Version:         0.0.1
 :: Repo:            https://github.com/peter201943/backup-scripts
 :: Created On:      2022-01-01
@@ -153,7 +152,7 @@ for /f "tokens=*" %%a in (backup_targets.txt) do (
 )
 CHOICE /C YN /M "Press Y for Yes, N for No"
 if errorlevel 2 (
-  echo Please correct the paths in scripts\THISSCRIPT\backup_targets.txt
+  echo Please correct the paths in BACKUPDRIVE\scripts\THISSCRIPT\backup_targets.txt
   exit /B 1
 )
 
@@ -170,7 +169,7 @@ echo Any paths that could not be found will be skipped during copying
 echo Proceed?
 CHOICE /C YN /M "Press Y for Yes, N for No"
 if errorlevel 2 (
-  echo Please correct the paths in scripts\THISSCRIPT\backup_targets.txt
+  echo Please correct the paths in BACKUPDRIVE\scripts\THISSCRIPT\backup_targets.txt
   exit /B 1
 )
 
@@ -185,7 +184,7 @@ if not exist README.pdf (
   echo Proceed anyways?
   CHOICE /C YN /M "Press Y for Yes, N for No"
   if errorlevel 2 (
-    echo Please check scripts\generic\ for a copy of README.pdf
+    echo Please check BACKUPDRIVE\scripts\generic\ for a copy of README.pdf
     exit /B 1
   )
 )
@@ -195,7 +194,10 @@ echo/
 echo Question 6
 echo Have you read "README.pdf" recently and are you aware of what actions the program will take?
 CHOICE /C YN /M "Press Y for Yes, N for No"
-if errorlevel 2 exit /B 1
+if errorlevel 2 (
+  echo You can find README.pdf in BACKUPDRIVE\scripts\THISSCRIPT\README.pdf
+  exit /B 1
+)
 
 :: Is the device name correct?
 echo/
@@ -277,3 +279,16 @@ if not exist %backup_path% (
 :: Backup
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:: TEMP TEST DANGER
+:: Robocopy ^
+::   /SD:$SOURCE ^
+::   /DD:$DEST ^
+::   /E ^
+::   /ZB ^
+::   /DCOPY:DAT ^
+::   /COPYALL ^
+::   /R:5 ^
+::   /W:10 ^
+::   /LOG:$LOGFILE ^
+::   /MIR
+:: 
