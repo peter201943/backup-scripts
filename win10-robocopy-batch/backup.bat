@@ -352,3 +352,5 @@ for /f "tokens=*" %%a in (%backup_targets%) do (
 ::    https://stackoverflow.com/a/48264867
 :: 2. Move HCI into a separate "prompt.bat"
 ::    Can then just run "backup.bat" on its own
+:: 3. Move tests out of HCI and into a dedicated "verify.bat"
+::    Then have "backup.bat" run these before running to prevent undefined behavior

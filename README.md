@@ -13,10 +13,11 @@ drive/:
     2022-01-01.device-name.log
   scripts/:
     device-specific-script/:
-      backup.bat
-      config.bat
-      prompt.bat
-      README.pdf
-      targets.txt
+      backup.bat  # Actual Backup/Robocopy/Rsync Script
+      config.bat  # Variables, Paths, Etc (See also YAML,TOML)
+      prompt.bat  # HCI Prompt to walk user through choices
+      README.pdf  # Documentation
+      targets.txt # List of folders (Only as separate file given Batch limitations)
+      tests.bat   # Tests to prevent bad behavior
 ```
 
