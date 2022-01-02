@@ -161,7 +161,7 @@ if exist %backup_path% (
   echo/
   echo Question 11
   echo WARNING a backup already exists at %backup_path%
-  echo Proceed? (Overwrites current)
+  echo Proceed? (UPDATES Existing Paths; APPENDS New Paths)
   CHOICE /C YN /M "Press Y for Yes, N for No"
   if errorlevel 2 (
     echo Please edit this script to change backup path

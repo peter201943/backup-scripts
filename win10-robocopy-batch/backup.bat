@@ -14,8 +14,9 @@
 ::    https://stackoverflow.com/a/48264867
 call config.bat
 
-:: Run Tests
+:: Run Tests and Quit if any fail
 call test.bat
+if errorlevel 2 exit /B 1
 
 :: Note, there is a lot going on in here, I will try to walk through each line
 :: Also note, the lines CANNOT be interrupted with comments
