@@ -1,0 +1,77 @@
+MIT License
+
+Copyright 2021 Peter Mangelsdorf
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+https://opensource.org/licenses/MIT
+
+Info
+Title:           Simple Robocopy Backup Script for Mom and Dad
+UUID:            a2ab1d0d-a348-4f47-839d-2ebf09281293
+Version:         0.0.1
+Repo:            https://github.com/peter201943/backup-scripts
+Created On:      2022-01-01
+Created By:      Peter James Mangelsdorf
+Contact At:      peter.j.mangelsdorf@outlook.com
+Last Updated On: 2022-01-01
+
+Files
+info.txt       This file, information
+targets.txt    Which folders to copy
+config.bat     Locations, Paths, Settings
+backup.bat     Robocopy to backup files
+prompt.bat     Error preventing prompts
+test.bat       Checks to prevent errors
+
+A Note on Batch Scripting
+
+A "README.docx" should also be included with this script
+And covers many of the same details in here
+With pictures and additional documentation
+If you are a non-technical user, read that documentation instead
+
+Microsoft Windows Batch is really old and poorly specified.
+   "Wikipedia: Batch file"
+   https://en.wikipedia.org/wiki/Batch_file
+But it is included by default on all Windows OS < Windows 11
+(Please use PowerShell or Python for Windows 11 and greater)
+
+Because of the finnicky and confusing nature of Batch
+I have commented each line of code with an explanation of what we are doing
+And included a linked article to explain what is going on.
+Most of these linked articles are on StackOverflow or one of its various subsidiaries
+   "Wikipedia: Stack Overflow"
+   https://en.wikipedia.org/wiki/Stack_Overflow
+These include a discussion and a list of alternate solutions
+
+Because Windows cannot distinguish betweewn uppercase and lowercase letters
+Snake case is used in all the variable names
+   "Wikipedia: Snake case"
+   https://en.wikipedia.org/wiki/Snake_case
+
+To edit Batch Scripts, please use a decent Text Editor
+(NOT "notepad.exe" (default on Windows Installs))
+If possible download Microsoft Visual Studio Code
+https://code.visualstudio.com/
+(Free and Lightweight)
+
+Right click a ".bat" file and choose "Edit" from the options
+You can also "Create a Shortcut", this is recommended for the "prompt.bat" file
