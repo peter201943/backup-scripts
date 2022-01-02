@@ -96,17 +96,17 @@ set todays_date=%temp_date:~0,4%-%temp_date:~4,2%-%temp_date:~6,2%
 :: Should take the form of "YYYY-MM-DD.DEVICENAME"
 set backup_name=%todays_date%.%device_name%
 
+:: Drive Letter of Backup Drive
+set drive_letter=D
+
 :: This is the folder path used for keeping logs of the backup process
 :: Note that this is on the EXTERNAL drive, not on a local folder
-:: Note that this assumes DRIVE LETTER "D"
-:: If DRIVE LETTER "D" is NOT the backup drive, please change it
 :: set log_path=C:\Users\Public\Downloads\%backup_name%.log.txt
-set log_path=D:\logs\devices\%backup_name%.log.txt
+set log_path=%drive_letter%:\logs\devices\%backup_name%.log.txt
 
 :: This is the folder path for the actual backups
 :: Note the same restrictions as above
-:: If DRIVE LETTER "D" is not being used for backups, please change it
-set backup_path=D:\backups\devices\%backup_name%.backup
+set backup_path=%drive_letter%:\backups\devices\%backup_name%.backup
 
 :: Name of file where backup targets are listed
 set backup_targets=backup_targets.txt
@@ -280,10 +280,10 @@ if exist %backup_path% (
 )
 
 :: Check that backup drive is connected
-if not exist D:\ (
+if not exist %drive_letter%:\ (
   echo/
   echo Question 13
-  echo WARNING backup drive not found at DRIVE LETTER "D"
+  echo WARNING backup drive not found at DRIVE LETTER %drive_letter%:\
   echo if drive is connected at different letter, please revise script and try again
   echo CRITICAL FAILURE
   exit /B 1
@@ -344,3 +344,11 @@ for /f "tokens=*" %%a in (%backup_targets%) do (
       /MIR
   )
 )
+
+:: Potential Future Revisions
+:: 1. Use a dedicated "config.bat" to hold the variables
+::    "How to pass variables from one batch file to another batch file?"
+::    https://stackoverflow.com/questions/27595440/how-to-pass-variables-from-one-batch-file-to-another-batch-file/27595570
+::    https://stackoverflow.com/a/48264867
+:: 2. Move HCI into a separate "prompt.bat"
+::    Can then just run "backup.bat" on its own
