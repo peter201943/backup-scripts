@@ -41,12 +41,22 @@ backup.bat     Robocopy to backup files
 prompt.bat     Error preventing prompts
 test.bat       Checks to prevent errors
 
-A Note on Batch Scripting
+Backup Drive Layout
+drive/
+  backups/
+    yyyy-mm-dd.device.backup/
+  logs/
+    yyyy-mm-dd.device.log.txt
+  scripts/
+    device/
+      backup.bat
+      config.bat
+      info.txt
+      prompt.bat
+      targets.txt
+      test.bat
 
-A "README.docx" should also be included with this script
-And covers many of the same details in here
-With pictures and additional documentation
-If you are a non-technical user, read that documentation instead
+A Note on Batch Scripting
 
 Microsoft Windows Batch is really old and poorly specified.
    "Wikipedia: Batch file"

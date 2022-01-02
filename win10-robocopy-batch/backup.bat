@@ -39,7 +39,8 @@ if errorlevel 2 exit /B 1
 :: And %backup_path%%%c as DESTINATION to COPY TO
 :: We copy ALL subdirectories, even EMPTY ones (/E)
 :: For each Directory, Copy the Data, Attributes, and Time (/DCOPY:DAT)
-:: For each File, Copy the Data, Attributes, Time, Security, and Owner (/COPY:DATSO)
+:: For each File, Copy the Data, Attributes, Time, Security (/COPY:DATS)
+:: Note that Ownership (O), Auditing Info (U) are NOT included (/COPY:DATSOU) (/COPYALL)
 :: Only Try 5 Times (/R:5)
 :: Only Wait 10 Seconds before retrying (/W:10)
 :: Append the status as a log to %log_path% (/LOG+:...)
@@ -55,7 +56,7 @@ for /f "tokens=*" %%a in (%backup_targets%) do (
       "%backup_path%%%c " ^
       /E ^
       /DCOPY:DAT ^
-      /COPY:DATSO ^
+      /COPY:DATS ^
       /R:5 ^
       /W:10 ^
       /LOG+:"%log_path%" ^
